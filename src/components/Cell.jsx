@@ -11,9 +11,9 @@ class Cell extends Component {
       <svg x={this.props.column * cellWidth} y={this.props.row * cellWidth} fill={"white"} stroke={"#343434"}>
         <g>
           <rect style={{backgroundColor: "white"}} width={cellWidth} height={cellWidth} />
-          <rect fill="orange" width={innerCellWidth} height={innerCellWidth} x={CELL_PADDING /2} y={CELL_PADDING/2} />
-          <text cx={innerCellWidth/2} cy={innerCellWidth/2} fontFamily="Verdana" fontSize="35">
-            8
+          <rect fill="orange" width={innerCellWidth} height={innerCellWidth} x={CELL_PADDING /2} y={CELL_PADDING/2} rx={20} ry={20} />
+          <text alignmentBaseline={"middle"} textAnchor={"middle"} x={cellWidth/2} y={cellWidth/2} fontFamily="Tahoma" fontSize="35">
+            2048
           </text>
         </g>
       </svg>

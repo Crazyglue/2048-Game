@@ -3,8 +3,13 @@
 import React, { Component } from 'react';
 import Game from './components/Game'
 import './App.css';
+import { connect } from 'react-redux'
+import * as actionCreators from './ducks/game_data'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.initializeGame()
+  }
   render() {
     return (
       <div className="App">
@@ -17,4 +22,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    gameData: state.game_data
+  }
+}
+
+export default connect(mapStateToProps, actionCreators)(App)

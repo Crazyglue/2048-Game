@@ -12,7 +12,7 @@ class Cell extends Component {
         <g>
           <rect style={{backgroundColor: "white"}} width={cellWidth} height={cellWidth} />
           <rect fill="orange" width={innerCellWidth} height={innerCellWidth} x={CELL_PADDING /2} y={CELL_PADDING/2} rx={20} ry={20} />
-          <text alignmentBaseline={"middle"} textAnchor={"middle"} x={cellWidth/2} y={cellWidth/2} fontFamily="Tahoma" fontSize="35">
+          <text fontWeight={"bold"} alignmentBaseline={"middle"} textAnchor={"middle"} x={cellWidth/2} y={cellWidth/2} fontFamily="Tahoma" fontSize="35">
             2048
           </text>
         </g>

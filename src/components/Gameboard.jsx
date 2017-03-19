@@ -16,7 +16,7 @@ class Gameboard extends Component {
     let cells = []
     for (var i = 0; i < this.state.gridSize.x; i++) {
       for (var j = 0; j < this.state.gridSize.x; j++) {
-        let cell = (<Cell column={j} row={i} boardWidth={BOARD_WIDTH} gridSize={this.state.gridSize} />)
+        let cell = (<Cell key={`${i} ${j}`} column={j} row={i} boardWidth={BOARD_WIDTH} gridSize={this.state.gridSize} />)
         cells.push(cell)
       }
     }

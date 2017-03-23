@@ -41,8 +41,8 @@ body {
 .gameboard__cells {
   display: flex;
   flex-direction: row;
-  width: 650px;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .cell__wrapper {

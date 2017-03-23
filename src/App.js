@@ -1,7 +1,7 @@
 'use-strict'
 import React, { Component } from 'react';
-import Game from './components/Game'
-import './App.css';
+import Gameboard from './components/Gameboard'
+import './index.css';
 import { connect } from 'react-redux'
 import * as actionCreators from './ducks/game_data'
 
@@ -11,11 +11,13 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className="app-wrapper">
+        <div className="header">
           <h2>2048!</h2>
         </div>
-        <Game />
+        <div className="game">
+          <Gameboard />
+        </div>
       </div>
     );
   }

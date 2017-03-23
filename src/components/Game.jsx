@@ -4,9 +4,7 @@ import Gameboard from './Gameboard'
 class Game extends Component {
   render() {
     return (
-      <div style={{marginTop: 50}}>
-        <Gameboard />
-      </div>
+      <Gameboard />
     );
   }
 }

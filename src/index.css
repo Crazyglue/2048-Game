@@ -3,3 +3,55 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.app-wrapper {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  height: 75;
+  padding: 20px;
+  color: white;
+}
+
+.game {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gameboard {
+  border: 1px black solid;
+  border-radius: 10px;
+  height: 650px;
+  width: 650px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.gameboard__grid {
+  position: absolute;
+}
+
+.gameboard__cells {
+  display: flex;
+  flex-direction: row;
+  width: 650px;
+  flex-wrap: wrap;
+}
+
+.cell__wrapper {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background:orange;
+  margin: 10px;
+  width: 138px;
+  border: 2px black solid;
+  border-radius: 5px;
+}

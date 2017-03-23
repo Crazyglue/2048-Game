@@ -8,7 +8,7 @@ import $ from "jquery";
 const SET_CELLS = 'game_data::SET_CELLS';
 
 const initialState = {
-  cellData: generateEmptyArray(16, 0)
+  cellData: generateEmptyArray(16, 1)
 };
 
 // Reducer

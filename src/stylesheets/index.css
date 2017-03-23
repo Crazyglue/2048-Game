@@ -55,3 +55,8 @@ body {
   border: 2px black solid;
   border-radius: 5px;
 }
+
+.cell__value {
+  line-height: 20px;
+  font-size: 34px;
+}

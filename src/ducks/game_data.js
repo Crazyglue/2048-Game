@@ -8,29 +8,39 @@ import $ from "jquery";
 const SET_CELLS = 'game_data::SET_CELLS';
 
 const initialState = {
-  cellData: generateEmptyArray(16, 1)
+  cellData: generateEmptyArray(16, 0)
 };
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_CELLS:
-      return {
-        ...state,
-        cellData: action.payload.cellData
-      }
+      console.log("setting cellData", state.cellData)
+      return Object.assign({}, state, { cellData: action.payload.cellData })
 
     default: return state;
   }
 }
 
-export function executeRound() {
-  return (dispatch, getState) => {
-    var cells = getState().game_data.cellData
-    var populatedIndexes = _.compact(_.map(cells, (v, i) => { return(v > 0 ? i : null) }))
-    console.log("populated indexes", populatedIndexes)
-    console.log("state", getState())
-  }
+// export function executeRound() {
+//   return (dispatch, getState) => {
+//     var cells = getState().game_data.cellData
+//     var populatedIndexes = getPopulatedIndexes(cells)
+//   }
+// }
+
+export function getPopulatedIndexes(cells) {
+  _.compact(_.map(cells, (v, i) => { return(v > 0 ? i : null) }))
+}
+
+export function generateRandomIndexes(avoidIndexes = []) {
+  let num = Math.floor(Math.random() * 16)
+  console.log("iterating random index:", num)
+
+  if (_.findIndex(avoidIndexes, num) === -1)
+    return num
+  else
+    generateRandomIndexes(avoidIndexes)
 }
 
 export function initializeGame() {
@@ -40,11 +50,13 @@ export function initializeGame() {
     console.log("initializing state", getState())
     var cells = getState().gameData.cellData
 
-    cells[Math.floor(Math.random() * 16)] = 1
-    cells[Math.floor(Math.random() * 16)] = 1
+    var randomIndex = generateRandomIndexes(getPopulatedIndexes(cells))
+    console.log("randomIndex", randomIndex)
+    cells[randomIndex] = 1
+
+    console.log("new cells", cells)
 
     dispatch({ type: SET_CELLS, payload: { cellData: cells }})
 
-    console.log("state:", getState());
   }
 }

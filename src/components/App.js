@@ -1,9 +1,8 @@
-'use-strict'
 import React, { Component } from 'react';
-import Gameboard from './components/Gameboard'
-import './index.css';
+import Gameboard from './Gameboard'
+import '../stylesheets/index.css'
 import { connect } from 'react-redux'
-import * as actionCreators from './ducks/game_data'
+import * as actionCreators from '../ducks/game_data'
 
 class App extends Component {
   componentDidMount() {

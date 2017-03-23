@@ -23,9 +23,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    gameData: state.game_data
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, actionCreators)(App)

@@ -1,6 +1,5 @@
 import { generateEmptyArray } from '../utils/array_utils'
 import _ from 'lodash'
-import $ from "jquery";
 
 // https://softwareengineering.stackexchange.com/questions/212808/treating-a-1d-data-structure-as-2d-grid
 
@@ -43,13 +42,14 @@ export function generateRandomIndexes(avoidIndexes) {
 }
 
 export function initializeGame() {
-  // $('body').keydown((e) => console.log("keydown!", e))
-
   return (dispatch, getState) => {
     var cells = getState().gameData.cellData.slice()
 
+    // choose two random locations for the first values
     var randomIndex = generateRandomIndexes(getPopulatedIndexes(cells))
     cells[randomIndex] = 1
+    var randomIndexTwo = generateRandomIndexes(getPopulatedIndexes(cells))
+    cells[randomIndexTwo] = 1
 
     dispatch({ type: SET_CELLS, payload: { cellData: cells }})
 

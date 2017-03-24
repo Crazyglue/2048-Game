@@ -5,6 +5,11 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../ducks/game_data'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.initializeGame()
+    window.addEventListener('keydown', this.props.executeRound)
+  }
+
   render() {
     return (
       <div className="app-wrapper">
@@ -12,7 +17,7 @@ class App extends Component {
           <h2>2048!</h2>
         </div>
         <div className="start-button">
-          <a className="btn btn-default" onClick={this.props.initializeGame}>Start game!</a>
+          <a className="btn btn-default" onClick={this.props.executeRound}>Start game!</a>
         </div>
         <div className="game">
           <Gameboard />

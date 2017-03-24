@@ -15,7 +15,6 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_CELLS:
-      console.log("setting cellData", state.cellData)
       return Object.assign({}, state, { cellData: action.payload.cellData })
 
     default: return state;
@@ -30,32 +29,27 @@ export default function reducer(state = initialState, action = {}) {
 // }
 
 export function getPopulatedIndexes(cells) {
-  return _.compact(_.map(cells, (v, i) => { return(v > 0 ? i : null) }))
+  return _.map(cells, (v, i) => { return(v > 0 ? i : null) })
 }
 
-export function generateRandomIndexes(avoidIndexes = []) {
+export function generateRandomIndexes(avoidIndexes) {
   let num = Math.floor(Math.random() * 16)
-  console.log("iterating random index:", num)
+  let index = avoidIndexes.findIndex((value) => { return value === num })
 
-  if (_.findIndex(avoidIndexes, num) === -1)
+  if (index === -1)
     return num
   else
-    console.log("conflict with existing index:", num)
-    generateRandomIndexes(avoidIndexes)
+    return generateRandomIndexes(avoidIndexes)
 }
 
 export function initializeGame() {
-  $('body').keydown((e) => console.log("keydown!", e))
+  // $('body').keydown((e) => console.log("keydown!", e))
 
   return (dispatch, getState) => {
-    console.log("initializing state", getState())
     var cells = getState().gameData.cellData.slice()
 
     var randomIndex = generateRandomIndexes(getPopulatedIndexes(cells))
-    console.log("randomIndex", randomIndex)
     cells[randomIndex] = 1
-
-    console.log("new cells", cells)
 
     dispatch({ type: SET_CELLS, payload: { cellData: cells }})
 

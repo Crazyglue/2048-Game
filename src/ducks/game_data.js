@@ -49,7 +49,7 @@ export function initializeGame() {
 
   return (dispatch, getState) => {
     console.log("initializing state", getState())
-    var cells = getState().gameData.cellData
+    var cells = getState().gameData.cellData.slice()
 
     var randomIndex = generateRandomIndexes(getPopulatedIndexes(cells))
     console.log("randomIndex", randomIndex)

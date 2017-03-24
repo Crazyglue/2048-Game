@@ -13,13 +13,12 @@ class Gameboard extends Component {
     })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return _.difference(nextProps.cellData, this.props.cellData).length !== 0
-  }
-
   render() {
     console.log("cellData", this.props.cellData)
-    let cells = this.generateCells(this.props.cellData)
+    let cells = this.props.cellData.map((cellValue, i) => {
+      return (<Cell key={i} cellValue={cellValue} />)
+    })
+
     return (
       <div className="gameboard">
         <div className="gameboard__grid">

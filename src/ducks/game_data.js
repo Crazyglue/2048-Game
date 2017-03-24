@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action = {}) {
 // }
 
 export function getPopulatedIndexes(cells) {
-  _.compact(_.map(cells, (v, i) => { return(v > 0 ? i : null) }))
+  return _.compact(_.map(cells, (v, i) => { return(v > 0 ? i : null) }))
 }
 
 export function generateRandomIndexes(avoidIndexes = []) {
@@ -40,6 +40,7 @@ export function generateRandomIndexes(avoidIndexes = []) {
   if (_.findIndex(avoidIndexes, num) === -1)
     return num
   else
+    console.log("conflict with existing index:", num)
     generateRandomIndexes(avoidIndexes)
 }
 

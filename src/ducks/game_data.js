@@ -1,4 +1,5 @@
-import { generateEmptyArray } from '../utils/array_utils'
+import { generateEmptyArray, getPopulatedIndexes, generateRandomIndexes } from '../utils/array_utils'
+import { getRowsOrColumnsFromGameBoard } from '../utils/game_utils'
 import _ from 'lodash'
 
 // https://softwareengineering.stackexchange.com/questions/212808/treating-a-1d-data-structure-as-2d-grid
@@ -11,7 +12,6 @@ const DIRECTIONS = {
   39: 1, // right
   40: -1, // down
 }
-const GAMEBOARD_WIDTH = 4
 
 const initialState = {
   cellData: generateEmptyArray(16, 0)
@@ -27,74 +27,7 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-function getValuesForColumn(cells, column) {
-  return _.filter(cells, (cellValue, index) => {
-    return parseInt(index % GAMEBOARD_WIDTH, 10) === column
-  })
-}
-
-function getValuesForRow(cells, row) {
-  return _.filter(cells, (cellValue, index) => {
-    return parseInt(index / GAMEBOARD_WIDTH, 10) === row
-  })
-}
-
-export function executeRound(e) {
-  console.log("executing round", e.keyCode)
-  return (dispatch, getState) => {
-    var key = e.keyCode
-    var cells = getState().gameData.cellData.slice()
-
-    var directionalArray = []
-    if (key === 37 || key === 39) { // left or right
-      for (let i = 0; i < GAMEBOARD_WIDTH; i++) {
-        let values = getValuesForRow(cells, i)
-        console.log("getting values for row " + i, values)
-        directionalArray.push(values)
-      }
-    }
-    else if (key === 38 || key === 40) { // up or down
-      for (let i = 0; i < GAMEBOARD_WIDTH; i++) {
-        let values = getValuesForColumn(cells, i)
-        console.log("getting values for column " + i, values)
-        directionalArray.push(values)
-      }
-    }
-    // directionalArray is now a 2D array of rows or columns,
-    // now we need to condense each row/column
-
-    // find all pairs in the array. keep in mind if a value is separated
-    // by a 0, ie [0, 2, 0, 2] should condense to [4, 0, 0, 0]
-    // while [1, 1, 1, 1] should condense to [2, 2, 0, 0]
-    directionalArray.map((rowOrColumn, i) => {
-      let newRowOrColumn = []
-      let firstIndexWithValue = null
-      rowOrColumn.map((value, j) => {
-        if (value > 0)
-          firstIndexWithValue = j
-
-        if (rowOrColumn[firstIndexWithValue] === rowOrColumn[j + 1])
-          newRowOrColumn[j] = rowOrColumn[j] + rowOrColumn[j + 1]
-
-      })
-    })
-  }
-}
-
-export function getPopulatedIndexes(cells) {
-  return _.map(cells, (v, i) => { return(v > 0 ? i : null) })
-}
-
-export function generateRandomIndexes(avoidIndexes) {
-  let num = Math.floor(Math.random() * 16)
-  let index = avoidIndexes.findIndex((value) => { return value === num })
-
-  if (index === -1)
-    return num
-  else
-    return generateRandomIndexes(avoidIndexes)
-}
-
+// Actions
 export function initializeGame() {
   return (dispatch, getState) => {
     var cells = getState().gameData.cellData.slice()
@@ -107,5 +40,37 @@ export function initializeGame() {
 
     dispatch({ type: SET_CELLS, payload: { cellData: cells }})
 
+  }
+}
+
+export function executeRound(e) {
+  console.log("executing round", e.keyCode)
+  return (dispatch, getState) => {
+    var key = e.keyCode
+    var cells = getState().gameData.cellData.slice()
+
+
+    var directionalArray = getRowsOrColumnsFromGameBoard(key, cells)
+
+    // directionalArray is now a 2D array of rows or columns,
+    // now we need to condense each row/column
+
+    // find all pairs in the array. keep in mind if a value is separated
+    // by a 0, ie [0, 2, 0, 2] should condense to [4, 0, 0, 0]
+    // while [1, 1, 1, 1] should condense to [2, 2, 0, 0]
+    directionalArray.map((rowOrColumn, i) => {
+      let newRowOrColumn = []
+      let firstIndexWithValue = null
+      rowOrColumn.forEach((value, j) => {
+        if (value > 0)
+          firstIndexWithValue = j
+
+        if (rowOrColumn[firstIndexWithValue] === rowOrColumn[j + 1])
+          newRowOrColumn[j] = rowOrColumn[j] + rowOrColumn[j + 1]
+
+      })
+
+      return newRowOrColumn
+    })
   }
 }
